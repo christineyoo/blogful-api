@@ -15,7 +15,8 @@ app.use(helmet());
 app.use(cors());
 
 app.get('/articles', (req, res, next) => {
-  ArticlesService.getAllArticles(/*need knex instance here */)
+  const knexInstance = req.app.get('db')
+  ArticlesService.getAllArticles(knexInstance)
     .then((articles) => {
       res.json(articles);
     })
