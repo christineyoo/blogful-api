@@ -15,10 +15,19 @@ app.use(helmet());
 app.use(cors());
 
 app.get('/articles', (req, res, next) => {
-  const knexInstance = req.app.get('db')
+  const knexInstance = req.app.get('db');
   ArticlesService.getAllArticles(knexInstance)
     .then((articles) => {
       res.json(articles);
+    })
+    .catch(next);
+});
+
+app.get('/articles/:article_id', (req, res, next) => {
+  const knexInstance = req.app.get('db');
+  ArticlesService.getById(knexInstance, req.params.article_id)
+    .then((article) => {
+      res.json(article);
     })
     .catch(next);
 });
