@@ -1,15 +1,17 @@
 const { expect } = require('chai');
 const knex = require('knex');
+const supertest = require('supertest');
 const app = require('../src/app');
 
-describe('Articles Endpoints', function () {
+describe.only('Articles Endpoints', function () {
   let db;
 
   before('make knex instance', () => {
-    db = knex = {
+    db = knex({
       client: 'pg',
       connection: process.env.TEST_DB_URL
-    };
+    });
+    app.set('db', db);
   });
 
   after('disconnect from db', () => db.destroy());
@@ -54,6 +56,11 @@ describe('Articles Endpoints', function () {
 
     beforeEach('insert articles', () => {
       return db.into('blogful_articles').insert(testArticles);
+    });
+
+    it('GET /articles responds with 200 and all of the articles', () => {
+      return supertest(app).get('/articles').expect(200);
+      // TODO: add more assertions about the body
     });
   });
 });
