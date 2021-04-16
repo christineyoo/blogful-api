@@ -18,6 +18,8 @@ describe.only('Articles Endpoints', function () {
 
   before('clean the table', () => db('blogful_articles').truncate());
 
+  afterEach('cleanup', () => db('blogful_articles').truncate());
+
   context('Given there are articles in the database', () => {
     const testArticles = [
       {
