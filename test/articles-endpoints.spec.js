@@ -59,8 +59,7 @@ describe.only('Articles Endpoints', function () {
     });
 
     it('GET /articles responds with 200 and all of the articles', () => {
-      return supertest(app).get('/articles').expect(200);
-      // TODO: add more assertions about the body
+      return supertest(app).get('/articles').expect(200, testArticles);
     });
   });
 });
