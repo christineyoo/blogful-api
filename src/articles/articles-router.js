@@ -51,7 +51,7 @@ articlesRouter.route('/:article_id').get((req, res, next) => {
         date_published: article.date_published
       });
     })
-    .catch(next);
+    .catch(next); 
 });
 
 module.exports = articlesRouter;
