@@ -7,6 +7,7 @@ const { NODE_ENV } = require('./config');
 const ArticlesService = require('./articles-service');
 
 const app = express();
+const jsonParser = express.json();
 
 const morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
 
@@ -21,6 +22,13 @@ app.get('/articles', (req, res, next) => {
       res.json(articles);
     })
     .catch(next);
+});
+
+app.post('/articles', jsonParser, (req, res, next) => {
+  res.status(201).json({
+    ...req.body,
+    id: 12
+  });
 });
 
 app.get('/articles/:article_id', (req, res, next) => {
