@@ -4,7 +4,7 @@ const supertest = require('supertest');
 const app = require('../src/app');
 const { makeArticlesArray } = require('./articles.fixtures');
 
-describe('Articles Endpoints', function () {
+describe.only('Articles Endpoints', function () {
   let db;
 
   before('make knex instance', () => {
@@ -68,7 +68,7 @@ describe('Articles Endpoints', function () {
     });
   });
 
-  describe('POST /articles', () => {
+  describe.only('POST /articles', () => {
     it('creates an article, responding with 201 and the new article', function () {
       this.retries(3);
       const newArticle = {
@@ -96,6 +96,42 @@ describe('Articles Endpoints', function () {
             .get(`/articles/${postRes.body.id}`)
             .expect(postRes.body)
         );
+    });
+
+    it('responds with 400 and an error message when the `title` is missing', () => {
+      return supertest(app)
+        .post('/articles')
+        .send({
+          style: 'Listicle',
+          content: 'Test new article content...'
+        })
+        .expect(400, {
+          error: { message: `Missing 'title' in request body` }
+        });
+    });
+
+    it('responds with 400 and an error message when the `content` is missing', () => {
+      return supertest(app)
+        .post('/articles')
+        .send({
+          style: 'Listicle',
+          title: 'Test new article'
+        })
+        .expect(400, {
+          error: { message: `Missing 'content' in request body` }
+        });
+    });
+
+    it('responds with 400 and an error message when the `content` is missing', () => {
+      return supertest(app)
+        .post('/articles')
+        .send({
+          content: 'Test new article content...',
+          title: 'Test new article'
+        })
+        .expect(400, {
+          error: { message: `Missing 'style' in request body` }
+        });
     });
   });
 });
