@@ -70,6 +70,7 @@ describe.only('Articles Endpoints', function () {
 
   describe.only('POST /articles', () => {
     it('creates an article, responding with 201 and the new article', function () {
+      this.retries(3);
       const newArticle = {
         title: 'Test new article',
         style: 'Listicle',
