@@ -203,4 +203,15 @@ describe('Articles Endpoints', function () {
       });
     });
   });
+
+  describe.only(`PATCH /api/articles/:article_id`, () => {
+    context('Given no articles', () => {
+      it(`responds with 404`, () => {
+        const articleId = 123456;
+        return supertest(app)
+          .patch(`/api/articles/${articleId}`)
+          .expect(404, { error: { message: `Article doesn't exist` }})
+      })
+    })
+  })
 });

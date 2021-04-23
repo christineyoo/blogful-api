@@ -46,6 +46,7 @@ articlesRouter
       .catch(next);
   });
 
+// .all() responds with 404 for every request that doesn't exist
 articlesRouter
   .route('/:article_id')
   .all((req, res, next) => {
