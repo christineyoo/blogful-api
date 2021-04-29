@@ -15,7 +15,7 @@ create table item (
     item_name text not null,
     unit text,
     unit_cost numeric,
-    supplier integer references supplier(id) not null
+    supplier integer references supplier(id) on delete set null
 );
 
 create table supplier_order (
