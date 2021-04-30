@@ -18,8 +18,10 @@ const UsersService = {
     return knex('blogful_users').where({ id }).delete();
   },
   updateUser(knex, id, newUserFields) {
-    return knex('blogful_users').where({ id }).update(newUSerFields);
+    return knex('blogful_users').where({ id }).update(newUserFields);
   }
 };
 
 module.exports = UsersService;
+
+// The functions carry out the SQL commands with knex
