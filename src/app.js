@@ -16,7 +16,7 @@ app.use(helmet());
 app.use(cors());
 
 app.use('/api/articles', articlesRouter);
-app.user('/api/users', usersRouter);
+app.use('/api/users', usersRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello, world!');
