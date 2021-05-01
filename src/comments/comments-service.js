@@ -18,7 +18,7 @@ const CommentsService = {
   },
 
   deleteComment(knex, id) {
-    return knex('blogful_comments'.where({ id })).delete();
+    return knex('blogful_comments').where({ id }).delete();
   },
 
   updateComment(knex, id, newCommentFields) {
@@ -27,3 +27,5 @@ const CommentsService = {
 };
 
 module.exports = CommentsService;
+
+// Lines 21 and 25: knex takes in the 'blogful_comments' parameter whereas the others don't. Why?
