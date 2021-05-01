@@ -64,6 +64,19 @@ usersRouter
       })
       .catch(next);
   })
+  .get((req, res, next) => {
+    res.json(serializeUser(res.user))
+  })
+  .delete((req, res, next) => {
+    UsersService.deleteUser(
+      req.app.get('db'),
+      req.params.user_id
+    )
+      .then(numRowsAffected => {
+        res.status(204).end()
+      })
+      .catch(next)
+  })
   .patch(jsonParser, (req, res, next) => {
     const { fullname, username, password, nickname } = req.body;
     const userToUpdate = { fullname, username, password, nickname };
@@ -78,6 +91,7 @@ usersRouter
 
     UsersService.updateUser(req.app.get('db'), req.params.user_id, userToUpdate)
       .then((numRowsAffected) => {
+        res.json({ message: 'Successfully updated' })
         res.status(204).end();
       })
       .catch(next);
